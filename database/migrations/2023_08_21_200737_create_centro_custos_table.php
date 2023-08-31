@@ -17,6 +17,21 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        \App\Models\CentroCusto::create([
+            'id_centro_custo' => 1,
+            'centro_custo' => 'Alimentação'
+        ]);
+
+        \App\Models\CentroCusto::create([
+            'id_centro_custo' => 2,
+            'centro_custo' => 'Transporte'
+        ]);
+
+        \App\Models\CentroCusto::create([
+            'id_centro_custo' => 3,
+            'centro_custo' => 'Salario'
+        ]);
     }
 
     /**

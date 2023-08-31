@@ -34,12 +34,12 @@ Route::get('/dashboard', function () {
 
 /**
  * -----------------------------
- * Centro de Custos
+ * Lançamento
  * 25-08-2023
  * -----------------------------
  */
-Route::prefix('centro-custo')
-->controller(CentroCustoController::class)
+Route::prefix('lancamento')
+->controller(LancamentoController::class)
 ->middleware('auth')
 ->group(function(){
 
@@ -63,12 +63,12 @@ Route::prefix('centro-custo')
 
 /**
  * -----------------------------
- * Lancamentos
+ * Centro de Custos
  * 25-08-2023
  * -----------------------------
  */
-Route::prefix('lancamento')
-->controller(LancamentoController::class)
+Route::prefix('centro-custo')
+->controller(CentroCustoController::class)
 ->middleware('auth')
 ->group(function(){
 
@@ -87,7 +87,7 @@ Route::prefix('lancamento')
     Route::post('atualizar/{id}','update')
         ->name('centro.update');
     Route::post('excluir/{id}','destroy')
-        ->name('cewntro.destroy');
+        ->name('centro.destroy');
 });
 
 

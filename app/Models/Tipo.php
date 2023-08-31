@@ -16,21 +16,27 @@ class Tipo extends Model
     protected $date = [
         'created_at',
         'updated_at',
-        'delete_at'
+        'deleted_at'
     ];
 
-    protected $fillalble = [
-         'tipo'
+    protected $fillable = [
+        'tipo'
     ];
 
     /**
      * -----------------------------
      * | Relacionamentos
      * |
-     * -----------------------------
+     * ------------------------------
      */
 
      public function lancamentos(){
-        return $this->belongsTo(Lancamento::class,'id_tipo','id_tipo',);
+        return $this->belongsTo(
+            Lancamento::class,
+            'id_tipo',
+            'id_tipo'
+            );
      }
+
+
 }
