@@ -70,6 +70,14 @@ class Lancamento extends Model
         );
     }
 
+    protected function valor(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => number_format($value, 2, ',', '.')
+
+        );
+    }
+
      /**
       * ---------------------------
       *|
