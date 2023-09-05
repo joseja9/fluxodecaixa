@@ -1,46 +1,60 @@
 @extends('layouts.base')
 @section('content')
-<h1>Show</h1>
+    <h1>
+        <i class="bi bi-list-check"></i>
+        Centro de Custo: {!! $centro->centro_custo !!}
+    </h1>
+    <h2>
+        Listas de Lancamentos -
+        {{ $centro->lancamentos()->count() }}
+        itens
+    </h2>
+    <p class="fs-5">
+        Total Entradas: R$
+        {{ $centro->lancamentos()->where('id_tipo', 1)->sum('valor') }}
+        <br>
+        Total Saidas: R$ -
+        {{ $centro->lancamentos()->where('id_tipo', 2)->sum('valor') }}
+        <br>
+        Saldo R$
+        {{
+            $centro->lancamentos()->where('id_tipo', 1)->sum('valor')
+            -
+            $centro->lancamentos()->where('id_tipo', 2)->sum('valor')
+        }}
 
-<div class="table-responsive">
+    </p>
+    <div class="table-responsive">
         <table class="table table-striped  table-hover ">
             <thead>
-                <caption>LISTA DE</caption>
+                <caption>Listas de Lancamentos - {{ $centro->lancamentos()->count() }}</caption>
                 <tr>
-                    <th class="col-2">#</th>
-                    <th>Valor</th>
+                    <th class="col-md-1">#</th>
+                    <th class="col-md-1">ID</th>
+                    <th>Tipo</th>
+                    <th>Usuário</th>
                     <th>Descrição</th>
+                    <th>Valor</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                {{-- @foreach ( $centroCustos as $centro ) --}}
-                <tr>
-                    <td scope="row">
-                        <div class="flex-column">
-                            {{-- ver --}}
-                            <a class="btn btn-success" href="#">
-                                <i class="bi bi-eye"></i>
-                            </a>
-                            {{-- editar --}}
-                            <a class="btn btn-dark" href="#">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            {{-- excluir --}}
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir" data-identificacao="#">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-
-                </tr>
-
-                {{-- @endforeach --}}
+                @foreach ($centro->lancamentos()->get() as $lancamento)
+                    <tr
+                        @if ($lancamento->id_tipo == 2)
+                            class="table-danger"
+                        @endif
+                    >
+                        <td scope="row">{{ $loop->iteration }}</td>
+                        <td scope="row">{{ $lancamento->id_lancamento }}</td>
+                        <td>{!! $lancamento->tipo->tipo !!}</td>
+                        <td>{!! $lancamento->usuario->name !!}</td>
+                        <td>{{ $lancamento->descricao }}</td>
+                        <td>{{ $lancamento->valor }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
-    </div>
-@endsection
-@section('scripts')
-@parent
-
-@endsection
+    @endsection
+    @section('scripts')
+        @parent
+    @endsection

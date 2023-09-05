@@ -28,7 +28,7 @@ class CentroCusto extends Model
 
     protected $primaryKey = 'id_centro_custo';
 
-    protected $date = [
+    protected $dates = [
 
         'created_at',
 

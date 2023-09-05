@@ -13,7 +13,7 @@ class Tipo extends Model
 
     protected $table = 'tipos';
     protected $primaryKey = 'id_tipo';
-    protected $dates = [
+    protected $date = [
         'created_at',
         'updated_at',
         'deleted_at'

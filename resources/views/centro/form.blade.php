@@ -9,7 +9,9 @@
         @endif
     </h1>
     <form
-    action="{{$centro ?
+    action="{{
+    $centro
+    ?
     route('centro.update',['id'=>$centro->id_centro_custo])
     :
     route('centro.store')
@@ -19,22 +21,23 @@
         <div class="col-md-6">
             <label for="centro_custo" class="form-label">Centro de Custo*</label>
             <input class="form-control"
-            type="text" id="centro_custo" name="centro_custo"
+            type="text"
+            id="centro_custo"
+            name="centro_custo"
             value="{{
-                $centro ?
-                $centro->centro_custo :
-                old('centro_custo')
+            $centro ?
+            $centro->centro_custo  :
+            old('centro_custo')
             }}"
             required>
         </div>
 
         <div class="col-md-2">
-            <input class="btn btn-primary" type="submit"
-        value="{{
-        $centro ?
-        'Atualizar' :
-        'Cadastrar'
-        }}">
+            <input class="btn btn-primary mt-4" type="submit"
+        value="{{$centro ?
+            'Atualizar' :
+            'Cadastrar'
+            }}">
         </div>
 
 

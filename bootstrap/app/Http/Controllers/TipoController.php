@@ -2,32 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\Tipo;
 use Illuminate\Http\Request;
-use App\Models\{
-    CentroCusto,
-    Lancamento,
-    Tipo,
-    User
-};
 
-
-
-class LancamentoController extends Controller
+class TipoController extends Controller
 {
     /**
-     * Listar todos os lançamentos
-     * @date 04-09-2023
-     *
+     * Display a listing of the resource.
      */
     public function index()
     {
-        $lancamentos = Lancamento::orderBy('vencimento')
-        ->paginate(10);
-
-
-        return view('lancamento.index')
-            ->with(compact('lancamentos'));
+        //
     }
 
     /**
@@ -49,7 +34,7 @@ class LancamentoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Lancamento $lancamento)
+    public function show(Tipo $tipo)
     {
         //
     }
@@ -57,7 +42,7 @@ class LancamentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Lancamento $lancamento)
+    public function edit(Tipo $tipo)
     {
         //
     }
@@ -65,7 +50,7 @@ class LancamentoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Lancamento $lancamento)
+    public function update(Request $request, Tipo $tipo)
     {
         //
     }
@@ -73,7 +58,7 @@ class LancamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lancamento $lancamento)
+    public function destroy(Tipo $tipo)
     {
         //
     }

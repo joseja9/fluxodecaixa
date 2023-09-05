@@ -7,20 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Lancamento;
 
-class Tipo extends Model
+class CentroCusto extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'tipos';
-    protected $primaryKey = 'id_tipo';
-    protected $dates = [
+    protected $table = 'centro_custos';
+    protected $primaryKey = 'id_centro_custo';
+    protected $date = [
         'created_at',
         'updated_at',
         'deleted_at'
     ];
 
     protected $fillable = [
-        'tipo'
+        'centro_custo'
     ];
 
     /**
@@ -33,10 +33,9 @@ class Tipo extends Model
      public function lancamentos(){
         return $this->belongsTo(
             Lancamento::class,
-            'id_tipo',
-            'id_tipo'
+            'id_centro_custo',
+            'id_centro_custo'
             );
      }
-
 
 }

@@ -15,7 +15,7 @@ class Lancamento extends Model
 
     protected $table = 'lancamentos';
     protected $primaryKey = 'id_lancamento';
-    protected $date = [
+    protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
@@ -32,9 +32,9 @@ class Lancamento extends Model
         'anexo'
     ];
 
-    protected $cast = [
+    protected $casts = [
         'vencimento' => 'date',
-        'valor' => 'decimal'
+        'valor' => 'decimal:2'
     ];
 
     /**
@@ -52,7 +52,7 @@ class Lancamento extends Model
     }
 
     public function usuario(){
-        return $this->belongsTo(User::class,'id','id_user');
+        return $this->belongsTo(User::class,'id_user','id');
     }
 
     /**

@@ -22,10 +22,10 @@ return new class extends Migration
         });
 
         \App\Models\User::create([
-            'name' => 'José Augusto',
-            'email' => 'joseja9184@gmail.com',
+            'name' => 'Thomas Melo',
+            'email' => 'thomas.cmelo@sp.senac.br',
             'email_verified_at' => now(),
-            'password' => '$2y$10$EPkyTk8Pj0WiVzkYte8cGO6BvT8c4v633XHBwOnochpJj1KrlZLJO'
+            'password' => '$2y$10$NWv1rNyKL6c5CbCaYaTAVOJ4O6WC.fPSlcUMzfTF3zOkNkjLwXK8G', //Senac@123
         ]);
     }
 
