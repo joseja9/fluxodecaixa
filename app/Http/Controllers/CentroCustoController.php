@@ -42,9 +42,7 @@ class CentroCustoController extends Controller
             'lancamentos',
             'lancamentos.tipo',
             'lancamentos.usuario',
-        ])
-            ->find($id)
-            ->paginate(10);
+        ])->find($id);
 
         return view('centro.show')
             ->with(compact('centro'));
@@ -64,7 +62,7 @@ class CentroCustoController extends Controller
         $centro->update($request->all());
         return redirect()
             ->route('centro.index')
-            ->with('atualizar', 'Atualizado com sucesso!');
+            ->with('atualizado', 'Atualizado com sucesso!');
     }
 
     /**

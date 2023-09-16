@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\{Tipo, CentroCusto, User };
-use PhpParser\Builder\Function_;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+
+use App\Models\{
+    CentroCusto,
+    Tipo,
+    User
+};
 
 class Lancamento extends Model
 {
@@ -15,6 +19,7 @@ class Lancamento extends Model
 
     protected $table = 'lancamentos';
     protected $primaryKey = 'id_lancamento';
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -38,49 +43,80 @@ class Lancamento extends Model
     ];
 
     /**
-     * ----------------------------
-     * | RELACIONAMENTOS
+     * --------------------------------------------------
+     * | Relacionamentos
      * | https://laravel.com/docs/10.x/eloquent-relationships
-     * ----------------------------
+     * --------------------------------------------------
      */
-    public function tipo(){
-        return $this->belongsTo(Tipo::class, 'id_tipo','id_tipo');
-    }
 
-    public function centroCusto(){
-        return $this->belongsTo(CentroCusto::class,'id_centro_custo','id_centro_custo');
-    }
-
-    public function usuario(){
-        return $this->belongsTo(User::class,'id_user','id');
+     /**
+      * retorna o tipo do lançamento
+      * 21-08-2023
+      * @return belongsTo
+      */
+    public function tipo()
+    {
+        return $this->belongsTo(
+            Tipo::class,
+            'id_tipo',
+            'id_tipo'
+        );
     }
 
     /**
-     * ----------------------------
-     * | MUTATOR
-     * | https://laravel.com/docs/10.x/eloquent-mutators
-     * ----------------------------
-     */
+      * retorna o centro de custo do lançamento
+      * 21-08-2023
+      * @return belongsTo
+      */
+    public function centroCusto()
+    {
+        return $this->belongsTo(
+            CentroCusto::class,
+            'id_centro_custo',
+            'id_centro_custo'
+        );
+    }
 
-     protected function descricao(): Attribute
+    /**
+      * retorna o usuario do lançamento
+      * 21-08-2023
+      * @return belongsTo
+      */
+    public function usuario()
+    {
+        return $this->belongsTo(
+            User::class,
+            'id_user',
+            'id'
+        );
+    }
+
+
+    /**
+     * ---------------------------------------------------
+     * | Mutators
+     * | https://laravel.com/docs/10.x/eloquent-mutators
+     * ---------------------------------------------------
+     */
+    protected function descricao(): Attribute
     {
         return Attribute::make(
             get: fn (string $value) => ucfirst($value),
-            set: fn (string $value) => strtolower($value),
+            set: fn (string $value) => strtolower(trim($value)),
         );
     }
 
     protected function valor(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => number_format($value, 2, ',', '.')
-
+            get: fn (string $value) => number_format($value,2,',','.'),
         );
     }
 
-     /**
-      * ---------------------------
-      *|
-      *---------------------------=
-      */
+
+    /**
+     * ----------------------------------------------------
+     * | Outros Métodos
+     * -------------------------------
+     */
 }

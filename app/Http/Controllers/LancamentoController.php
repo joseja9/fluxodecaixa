@@ -18,33 +18,51 @@ class LancamentoController extends Controller
     /**
      * Listar todos os lançamentos
      * @date 04-09-2023
+     * @update 15-09-2023 - inclusão da pesquisa
      *
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lancamentos = Lancamento::orderBy('id_lancamento','desc')
-        ->paginate(10);
+        $search = $request->get('search');
+        $dt_inicial = $request->get('dt_inical')??null;
+        $dt_final = $request->get('dt_final')??null;
 
+        //where('id_user',Auth::user()->id)
+        $lancamentos = Lancamento::where(function ($query) use ($search,$dt_inicial,$dt_final){
+            if($search){
+                $query->where('descricao','like',"%$search%");
+            }
+            if ($dt_inicial) {
+                $query->where('vencimento','>=',$dt_inicial);
+            }
+            if ($dt_final) {
+                $query->where('vencimento','>=',$dt_final);
+            }
+        })->orderBy('id_lancamento','desc')
+            ->paginate(10);
 
         return view('lancamento.index')
             ->with(compact('lancamentos'));
     }
 
     /**
-     * Direciona para o formulário do novo lançamento
+     * Formulário de novo lançamento
      * @date 11-09-2023
      */
     public function create()
     {
         $lancamento = null;
-        $centrosDeCustos = CentroCusto::class;
+        $centrosDeCusto = CentroCusto::class;
         $tipos = Tipo::class;
 
         return view('lancamento.form')
-        ->with
-        (
-            compact('lancamento','centrosDeCustos','tipos')
-        );
+            ->with(
+                compact(
+                    'lancamento',
+                    'centrosDeCusto',
+                    'tipos'
+                )
+            );
     }
 
     /**
@@ -57,13 +75,13 @@ class LancamentoController extends Controller
         $lancamento->fill($request->all());
         // capturar o id do usuario logado
         $lancamento->id_user = Auth::user()->id;
-        //subir o anexo
-        if ($request->anexo) {
+        // subir o anexo
+        if($request->anexo){
             $extension = $request->anexo->getClientOriginalExtension();
             $nomeAnexo = date('YmdHis').'.'.$extension;
             $request->anexo->storeAs('anexos',$nomeAnexo);
             $lancamento->anexo = $nomeAnexo;
-            //  $lancamento->anexo = $request->anexo->store('anexos');
+            // $lancamento->anexo = $request->anexo->store('anexos');
         }
         $lancamento->save();
         return redirect()
